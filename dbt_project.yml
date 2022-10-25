@@ -16,11 +16,24 @@ clean-targets:
     - "target"
     - "dbt_modules"
     - "logs"
+    - "dbt_packages"
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
 models:
   jaffle_shop:
-      materialized: table
-      staging:
-        materialized: view
+  # snowflake_spend:
+  #   +enabled: true
+
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 0.8.5
+    
+  - package: calogica/dbt_expectations
+    version: 0.5.6
+
+  - package: tnightengale/dbt_meta_testing
+    version: 0.3.5
+
+  - package: dbt-labs/codegen
+    version: 0.6.0
