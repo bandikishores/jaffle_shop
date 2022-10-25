@@ -59,7 +59,7 @@ order_payments as (
         -- {{payment_methods}},
         -- {{ var('my_payment_methods') }},
         {% for payment_method in payment_methods -%}
-        sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}
+        sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}_amount,
         {% endfor -%}
 
         sum(amount) as total_amount
@@ -77,6 +77,13 @@ final as (
         orders.customer_id,
         orders.order_date,
         orders.status,
+
+        {% for payment_method in payment_methods -%}
+
+        order_payments.{{ payment_method }}_amount,
+
+        {% endfor -%}
+
         order_payments.total_amount as amount
 
     from orders
