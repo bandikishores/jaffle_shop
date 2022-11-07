@@ -5,7 +5,7 @@ version: '0.1'
 
 profile: 'jaffle_shop'
 
-model-paths: ["models"]
+model-paths: ["models","another_models/staging"]
 seed-paths: ["seeds"]
 test-paths: ["tests"]
 analysis-paths: ["analysis"]
@@ -21,7 +21,13 @@ clean-targets:
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
 models:
+  materialized: view
   jaffle_shop:
+    materialized: view
+    staging:
+      materialized: table
+      staging3:
+        materialized: view
   # snowflake_spend:
   #   +enabled: true
 
