@@ -20,10 +20,26 @@ clean-targets:
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
+# ======
+# Run Hooks
+# ======
+on-run-start:
+  - "{{ create_udfs() }}"
+
 models:
   jaffle_shop:
   # snowflake_spend:
   #   +enabled: true
+  sub-project:
+    +enabled: true
+
+vars:
+  # The `start_date` variable will be accessible in all resources
+  start_date: '2016-06-01'
+  # The `platforms` variable is only accessible to resources in the my_dbt_project project
+  my_dbt_project:
+    platforms: ['web', 'mobile']
+
 
 packages:
   - package: dbt-labs/dbt_utils

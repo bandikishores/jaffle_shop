@@ -3,4 +3,7 @@ name: 'my_sub_jaffle_shop'
 config-version: 2
 version: '0.1'
 
+model-paths: ["models"]
+seed-paths: ["seeds"]
+
 profile: 'jaffle_shop'

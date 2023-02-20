@@ -1,7 +1,6 @@
 
 {{ config({
         "materialized": "incremental",
-        "unique_key": "order_id",
         "tags": ["orders_snapshots"],
         "alias": "orders"
     })
@@ -20,6 +19,7 @@ with orders as (
     select * from {{ ref('stg_orders') }}
 
 ),
+{#
  my_orders as (
 
     select 
@@ -33,6 +33,7 @@ with orders as (
     {% endif %}
 
 ),
+#}
 
 payments as (
 

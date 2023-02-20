@@ -37,6 +37,8 @@ models:
         tests:
           - unique
           - not_null
+          - my_not_null
+          - custom_singular_test
         description: This is a unique identifier for an order
 
       - name: customer_id
