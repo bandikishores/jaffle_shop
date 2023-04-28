@@ -1,0 +1,100 @@
+{
+  "macro_j29EP49R" : {
+    "name" : "cents_to_dollars",
+    "macroId" : "macro_j29EP49R",
+    "macroType" : "expression",
+    "definition" : "round(1.0 * {{column_name}} / 100, {{decimal_places}})",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ {
+        "name" : "column_name",
+        "kind" : {
+          "type" : "value"
+        },
+        "optional" : false,
+        "comment" : "ad\nSDF D G\n",
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "decimal_places",
+        "kind" : {
+          "type" : "value",
+          "value" : "2"
+        },
+        "optional" : true,
+        "comment" : "decimal places to round off.",
+        "isWorkflowNodeConfiguration" : false
+      } ]
+    },
+    "description" : "This macro calculates dollars from cents.",
+    "staleState" : "none",
+    "propertiesFile" : {
+      "name" : "my_macros",
+      "content" : "version: 2\nmacros:\n  - name: cents_to_dollars\n    description: This macro calculates dollars from cents.\n    arguments:\n      - name: column_name\n        type: string\n        description: |\n          ad\n          SDF D G\n      - name: decimal_places\n        type: my_integer\n        description: decimal places to round off.\n",
+      "path" : "jaffle_shop/macros/my_macros.yml",
+      "projectConfiguration" : null,
+      "folderConfiguration" : {
+        "version" : 2,
+        "macros" : [ {
+          "name" : "cents_to_dollars",
+          "description" : "This macro calculates dollars from cents.",
+          "arguments" : [ {
+            "name" : "column_name",
+            "type" : "string",
+            "description" : "ad\nSDF D G\n"
+          }, {
+            "name" : "decimal_places",
+            "type" : "my_integer",
+            "description" : "decimal places to round off."
+          } ],
+          "macroType" : "expression"
+        } ]
+      },
+      "packagesYml" : null
+    }
+  },
+  "macro_FmSPCbSN" : {
+    "name" : "cents_to_dollars1",
+    "macroId" : "macro_FmSPCbSN",
+    "macroType" : "expression",
+    "definition" : "round(1.0 * {{column_name}} / 100, {{decimal_places}})",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ {
+        "name" : "column_name",
+        "kind" : {
+          "type" : "value"
+        },
+        "optional" : false,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "decimal_places",
+        "kind" : {
+          "type" : "value",
+          "value" : "2"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "abc",
+        "kind" : {
+          "type" : "value",
+          "value" : "my_abc"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      } ]
+    },
+    "staleState" : "none"
+  },
+  "macro_EcXNduLB" : {
+    "name" : "just_concat",
+    "macroId" : "macro_EcXNduLB",
+    "macroType" : "query",
+    "definition" : "\nselect * from dbt_alice.test limit 1",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ ]
+    },
+    "staleState" : "none"
+  }
+}

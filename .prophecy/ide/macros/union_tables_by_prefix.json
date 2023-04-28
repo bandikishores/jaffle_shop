@@ -1,0 +1,29 @@
+{
+  "macro_gPY3oDkX" : {
+    "name" : "union_tables_by_prefix",
+    "macroId" : "macro_gPY3oDkX",
+    "macroType" : "query",
+    "definition" : "\n\n  {% set tables = dbt_utils.get_relations_by_prefix(database=database, schema=schema) %}\n\n  {% for table in tables %}\n\n      {% if not loop.first %}\n      UNION ALL \n      {% endif %}\n        {{ log('running') }}\n      {% set query %}\n        select * from {{ table.database }}.{{ table.schema }}.{{ table.name }} limit 1\n      {% endset %}\n      {{ log('Before running query ' ~ query, info = True)}}\n      \n      {% set results = run_query(query) %}\n      {{ log('SQL results ' ~ query ~ ' is ' ~ results, info = True)}}\n      \n  {% endfor %}",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ {
+        "name" : "database",
+        "kind" : {
+          "type" : "value",
+          "value" : "'jaffle_shop'"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "schema",
+        "kind" : {
+          "type" : "value",
+          "value" : "'dbt_alice'"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      } ]
+    },
+    "staleState" : "none"
+  }
+}

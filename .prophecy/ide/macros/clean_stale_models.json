@@ -1,0 +1,45 @@
+{
+  "macro_ZAdZ7hNB" : {
+    "name" : "clean_stale_models",
+    "macroId" : "macro_ZAdZ7hNB",
+    "macroType" : "query",
+    "definition" : "\n    \n    {% set get_drop_commands_query %}\n        select\n            case \n                when table_type = 'VIEW'\n                    then table_type\n                else \n                    'TABLE'\n            end as drop_type, \n            'DROP ' || drop_type || ' {{ database | upper }}.' || table_schema || '.' || table_name || ';'\n        from {{ database }}.information_schema.tables \n        where table_schema = upper('{{ schema }}')\n        and last_altered <= current_date - {{ days }} \n    {% endset %}\n\n    {{ log('\\nGenerating cleanup queries...\\n', info=True) }}\n    {% set drop_queries = run_query(get_drop_commands_query).columns[1].values() %}\n\n    {% for query in drop_queries %}\n        {% if dry_run %}\n            {{ log(query, info=True) }}\n        {% else %}\n            {{ log('Dropping object with command: ' ~ query, info=True) }}\n            {% do run_query(query) %} \n        {% endif %}       \n    {% endfor %}",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ {
+        "name" : "database",
+        "kind" : {
+          "type" : "value",
+          "value" : "target.database"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "schema",
+        "kind" : {
+          "type" : "value",
+          "value" : "target.schema"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "days",
+        "kind" : {
+          "type" : "value",
+          "value" : "7"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "dry_run",
+        "kind" : {
+          "type" : "value",
+          "value" : "True"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      } ]
+    },
+    "staleState" : "none"
+  }
+}

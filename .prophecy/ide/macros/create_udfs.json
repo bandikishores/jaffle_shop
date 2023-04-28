@@ -1,0 +1,13 @@
+{
+  "macro_RK6OiZuK" : {
+    "name" : "create_udfs",
+    "macroId" : "macro_RK6OiZuK",
+    "macroType" : "expression",
+    "definition" : "",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ ]
+    },
+    "staleState" : "none"
+  }
+}

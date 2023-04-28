@@ -1,0 +1,29 @@
+{
+  "macro_HdeuVDv2" : {
+    "name" : "grant_select",
+    "macroId" : "macro_HdeuVDv2",
+    "macroType" : "query",
+    "definition" : "\n\n  {{ log('Starting granting schema ' ~ target.schema ~ ' to role ' ~ role, info=True) }}\n  {% set sql %}\n  grant ALL on schema {{ schema }} to role {{ role }};\n  \n  {% endset %}\n\n  {{ log('Granting select on all tables and views in schema ' ~ target.schema ~ ' to role ' ~ role ~ ' for sql' ~ sql, info=True) }}\n  {% do run_query(sql) %}\n  {{ log('Privileges granted', info=True) }}",
+    "parameters" : {
+      "type" : "record",
+      "fields" : [ {
+        "name" : "schema",
+        "kind" : {
+          "type" : "value",
+          "value" : "target.schema"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      }, {
+        "name" : "role",
+        "kind" : {
+          "type" : "value",
+          "value" : "target.role"
+        },
+        "optional" : true,
+        "isWorkflowNodeConfiguration" : false
+      } ]
+    },
+    "staleState" : "none"
+  }
+}

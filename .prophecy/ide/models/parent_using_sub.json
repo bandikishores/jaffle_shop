@@ -1,0 +1,78 @@
+{
+  "id" : "parent_using_sub",
+  "metainfo" : {
+    "label" : "parent_using_sub",
+    "autoLayout" : true,
+    "staleState" : "none",
+    "sourceSuggestions" : {
+      "sources" : [ ]
+    },
+    "graphConfig" : {
+      "userDefinedConfig" : {
+        "vars" : { }
+      }
+    }
+  },
+  "processes" : {
+    "source##kNoG0drn" : {
+      "id" : "source##kNoG0drn",
+      "component" : "Model",
+      "metadata" : {
+        "label" : "source",
+        "phase" : 0
+      },
+      "properties" : {
+        "table" : {
+          "name" : "sub_stg_customers",
+          "sourceType" : "Model"
+        }
+      },
+      "ports" : {
+        "inputs" : [ ],
+        "outputs" : [ {
+          "id" : "rDXBqfyK",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false
+      }
+    },
+    "parent_using_sub##wY0cN5QZ" : {
+      "id" : "parent_using_sub##wY0cN5QZ",
+      "component" : "TargetModel",
+      "metadata" : {
+        "label" : "parent_using_sub",
+        "phase" : 0,
+        "macroDependencies" : [ ]
+      },
+      "properties" : {
+        "customQueryDisabled" : true,
+        "customQuery" : false,
+        "incrementalEditorDisabled" : true,
+        "query" : "SELECT * \n\nFROM source\n",
+        "incrementalKey" : false,
+        "incremental" : {
+          "expression" : "true"
+        }
+      },
+      "ports" : {
+        "inputs" : [ {
+          "id" : "sSJuOjJ5",
+          "slug" : "source"
+        } ],
+        "outputs" : [ {
+          "id" : "HpUsbhVB",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false
+      }
+    }
+  },
+  "connections" : [ {
+    "id" : "mR4HQUs6",
+    "source" : "source##kNoG0drn",
+    "sourcePort" : "rDXBqfyK",
+    "target" : "parent_using_sub##wY0cN5QZ",
+    "targetPort" : "sSJuOjJ5"
+  } ],
+  "component" : "Model"
+}

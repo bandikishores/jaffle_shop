@@ -1,55 +1,53 @@
-name: 'jaffle_shop'
-
+# ==================
+# Project Details
+# ==================
+name: "jaffle_shop"
 config-version: 2
-version: '0.1'
+require-dbt-version:
+- ">=1.0.0"
+- "<2.0.0"
+version: "0.1"
+profile: "jaffle_shop"
 
-profile: 'jaffle_shop'
-
-model-paths: ["models"]
-seed-paths: ["seeds"]
-test-paths: ["tests"]
-analysis-paths: ["analysis"]
-macro-paths: ["macros"]
-
-target-path: "target"
+# ==================
+# File Path Configs
+# ==================
+test-paths:
+- "tests"
 clean-targets:
-    - "target"
-    - "dbt_modules"
-    - "logs"
-    - "dbt_packages"
+- "target"
+- "dbt_modules"
+- "logs"
+- "dbt_packages"
+seed-paths:
+- "seeds"
+model-paths:
+- "models"
+- "prophecy-sources"
+analysis-paths:
+- "analysis"
+macro-paths:
+- "macros"
+target-path: "target"
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
-
-# ======
-# Run Hooks
-# ======
-on-run-start:
-  - "{{ create_udfs() }}"
-
-models:
-  jaffle_shop:
-  # snowflake_spend:
-  #   +enabled: true
-  sub-project:
-    +enabled: true
-
+# ==================
+# Variable Configs
+# ==================
 vars:
-  # The `start_date` variable will be accessible in all resources
   start_date: '2016-06-01'
-  # The `platforms` variable is only accessible to resources in the my_dbt_project project
   my_dbt_project:
-    platforms: ['web', 'mobile']
+    platforms:
+    - web
+    - mobile
 
+# ==================
+# Model Configs
+# ==================
+models:
+  sub-project: {}
 
-packages:
-  - package: dbt-labs/dbt_utils
-    version: 0.8.5
-    
-  - package: calogica/dbt_expectations
-    version: 0.5.6
-
-  - package: tnightengale/dbt_meta_testing
-    version: 0.3.5
-
-  - package: dbt-labs/codegen
-    version: 0.6.0
+# ============
+# Run Hooks
+# ============
+on-run-start:
+- "{{ create_udfs() }}"

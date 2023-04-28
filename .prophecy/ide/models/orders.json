@@ -1,0 +1,41 @@
+{
+  "id" : "orders",
+  "metainfo" : {
+    "label" : "orders",
+    "autoLayout" : true,
+    "staleState" : "none",
+    "sourceSuggestions" : {
+      "sources" : [ ]
+    }
+  },
+  "processes" : {
+    "cxbDq8Zw" : {
+      "id" : "cxbDq8Zw",
+      "component" : "TargetModel",
+      "metadata" : {
+        "label" : "orders",
+        "phase" : 0
+      },
+      "properties" : {
+        "customQueryDisabled" : true,
+        "customQuery" : true,
+        "incrementalEditorDisabled" : true,
+        "query" : "\n{{ config({\n        \"materialized\": \"incremental\",\n        \"tags\": [\"orders_snapshots\"],\n        \"alias\": \"orders\"\n    })\n}}\n\n{% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}\n\n{% set payments_dict = {\n    'credit':'card10',\n    'bank':'transfer11'\n} %}\n\n\nwith orders as (\n\n    select * from {{ ref('stg_orders') }}\n\n),\n{#\n my_orders as (\n\n    select \n        * \n    from {{ source('myAliasedTest','testless') }} \n\n    {% if target.name == 'dev' %}\n        limit 10\n    {% else %}\n        limit 100\n    {% endif %}\n\n),\n#}\n\npayments as (\n\n    select *,\n    \n\n        {% for payment_method in payments_dict -%}\n            case when payment_method = '{{ payment_method }}' then amount else 0 end as {{ payments_dict[payment_method] }}_amount,\n        {% endfor %}\n\n        {{ cents_to_dollars('amount') }} as macro_amount\n\n    from {{ ref('stg_payments') }}\n\n),\n\n{% set my_abc = 'abc' %}\n\norder_payments as (\n\n    select\n        order_id,\n        -- {{my_abc}},\n        -- {{payment_methods}},\n        -- {{ var('my_payment_methods') }},\n        {% for payment_method in payment_methods -%}\n        sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}_amount,\n        {% endfor -%}\n\n        sum(amount) as total_amount\n\n    from payments\n\n    group by order_id\n\n),\n\nfinal as (\n\n    select\n        orders.order_id,\n        orders.customer_id,\n        orders.order_date,\n        orders.status,\n\n        {% for payment_method in payment_methods -%}\n\n        order_payments.{{ payment_method }}_amount,\n\n        {% endfor -%}\n\n        order_payments.total_amount as amount\n\n    from orders\n\n\n    left join order_payments\n        on orders.order_id = order_payments.order_id\n\n)\n\nselect * from final\n{% if is_incremental() %}\n\n  -- this filter will only be applied on an incremental run\n  where order_date > (select max(order_date) from {{ this }})\n\n{% endif %}",
+        "incrementalKey" : false,
+        "incremental" : {
+          "expression" : "true"
+        }
+      },
+      "ports" : {
+        "inputs" : [ ],
+        "outputs" : [ {
+          "id" : "rHlxyONI",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false
+      }
+    }
+  },
+  "connections" : [ ],
+  "component" : "Model"
+}

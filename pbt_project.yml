@@ -1,0 +1,233 @@
+name: p2
+description: ''
+version: 0.0.1
+author: null
+language: sql
+buildSystem: ''
+buildSystemDetails: null
+pipelines: {}
+datasets: {}
+templates: {}
+jobs: {}
+functions:
+  author: null
+  createdAt: '2023-04-28 09:58:36'
+  modifiedAt: '2023-04-28 09:58:36'
+  gems: {}
+  udfs: {}
+  udafs: {}
+  expressions: {}
+subgraphs: {}
+sqlModels:
+  .prophecy/metadata/sqlmodels/stg_orders:
+    name: stg_orders
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - models/staging/stg_orders.sql
+    - .prophecy/ide/models/stg_orders.json
+    - models/staging/schema.yml
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmodels/parent_using_sub:
+    name: parent_using_sub
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - models/parent_using_sub.sql
+    - .prophecy/ide/models/parent_using_sub.json
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmodels/orders:
+    name: orders
+    description: This table has basic information about orders, as well as some derived
+      facts based on payments
+    author: kishore@simpledatalabs.com
+    files:
+    - models/orders.sql
+    - .prophecy/ide/models/orders.json
+    - models/schema.yml
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmodels/customers:
+    name: customers
+    description: This table has basic information about a customer, as well as some
+      derived facts based on a customer's orders
+    author: kishore@simpledatalabs.com
+    files:
+    - models/customers.sql
+    - .prophecy/ide/models/customers.json
+    - models/schema.yml
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmodels/stg_payments:
+    name: stg_payments
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - models/staging/stg_payments.sql
+    - .prophecy/ide/models/stg_payments.json
+    - models/staging/schema.yml
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmodels/stg_customers:
+    name: stg_customers
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - models/staging/stg_customers.sql
+    - .prophecy/ide/models/stg_customers.json
+    - models/staging/schema.yml
+    sqlDependencies:
+      models: []
+      datasets: []
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+sqlMacros:
+  .prophecy/metadata/sqlmacros/clean_stale_models:
+    name: clean_stale_models
+    macroType: query
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/clean_stale_models.sql
+    - .prophecy/ide/macros/clean_stale_models.json
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/cents_to_dollars1:
+    name: cents_to_dollars1
+    macroType: expression
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/cents_to_dollar.sql
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/create_udfs:
+    name: create_udfs
+    macroType: expression
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/create_udfs.sql
+    - .prophecy/ide/macros/create_udfs.json
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/union_tables_by_prefix:
+    name: union_tables_by_prefix
+    macroType: query
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/union_tables_by_prefix.sql
+    - .prophecy/ide/macros/union_tables_by_prefix.json
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/cents_to_dollars:
+    name: cents_to_dollars
+    macroType: expression
+    description: This macro calculates dollars from cents.
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/cents_to_dollar.sql
+    - macros/my_macros.yml
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/grant_select:
+    name: grant_select
+    macroType: query
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/grant_select.sql
+    - .prophecy/ide/macros/grant_select.json
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlmacros/just_concat:
+    name: just_concat
+    macroType: query
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - macros/cents_to_dollar.sql
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+sqlSeeds:
+  .prophecy/metadata/sqlseeds/raw_customers:
+    name: raw_customers
+    description: A mapping of two letter country codes to country names
+    author: kishore@simpledatalabs.com
+    files:
+    - seeds/raw_customers.csv
+    - models/src_mysources.yml
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlseeds/raw_orders:
+    name: raw_orders
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - seeds/raw_orders.csv
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlseeds/raw_payments:
+    name: raw_payments
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - seeds/raw_payments.csv
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+  .prophecy/metadata/sqlseeds/snowflake_contract_rates:
+    name: snowflake_contract_rates
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - seeds/snowflake_contract_rates.csv
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+sqlSources:
+  .prophecy/metadata/sqlsources/myAliasedTest:
+    name: myAliasedTest
+    description: null
+    author: kishore@simpledatalabs.com
+    files:
+    - models/src_mysources.yml
+    createdAt: '2023-04-28 09:58:36'
+    modifiedAt: '2023-04-28 09:58:36'
+    tables:
+    - name: testless
+      description: null
+      author: kishore@simpledatalabs.com
+      createdAt: '2023-04-28 09:58:36'
+      modifiedAt: '2023-04-28 09:58:36'
+    - name: testlessmore
+      description: null
+      author: kishore@simpledatalabs.com
+      createdAt: '2023-04-28 09:58:36'
+      modifiedAt: '2023-04-28 09:58:36'
+sqlUnreferencedSources: {}
+sqlPipeline:
+  name: sqlPipeline
+  description: null
+  author: kishore@simpledatalabs.com
+  createdAt: '2023-04-28 09:58:36'
+  modifiedAt: '2023-04-28 09:58:36'
+dependencies: '[]'
+projectDependencies: {}
+pipelineConfigurations: {}
