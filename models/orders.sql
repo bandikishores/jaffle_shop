@@ -1,6 +1,6 @@
 
 {{ config({
-        "materialized": "incremental",
+        "materialized": "table",
         "tags": ["orders_snapshots"],
         "alias": "orders"
     })
@@ -8,10 +8,12 @@
 
 {% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
 
-{% set payments_dict = {
+{% 
+   set payments_dict = {
     'credit':'card10',
     'bank':'transfer11'
-} %}
+   } 
+%}
 
 
 with orders as (
@@ -75,6 +77,7 @@ final as (
 
     select
         orders.order_id,
+        -- This column removed
         orders.customer_id,
         orders.order_date,
         orders.status,
@@ -86,6 +89,8 @@ final as (
         {% endfor -%}
 
         order_payments.total_amount as amount
+        --,1 as new_dummy
+        {#-- ,{{return_cols()}}#}
 
     from orders
 

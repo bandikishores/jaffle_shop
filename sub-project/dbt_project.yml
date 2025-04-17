@@ -7,3 +7,6 @@ model-paths: ["models"]
 seed-paths: ["seeds"]
 
 profile: 'jaffle_shop'
+
+vars:
+  child_var: 'child_config_value'

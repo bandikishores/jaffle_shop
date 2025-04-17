@@ -1,5 +1,113 @@
 version: 2
 
+
+models:
+- name: "test"
+  columns:
+  - name: "FIRST_NAME"
+    dataType:
+      type: "String"
+  - name: "LAST_NAME"
+    dataType:
+      type: "String"
+  - name: "CUSTOMER_ID"
+    dataType:
+      type: "Number"
+  - name: "C"
+    dataType:
+      type: "Variant"
+      inferredType:
+        type: "Struct"
+        fields:
+        - name: "complex_name"
+          dataType:
+            type: "Struct"
+            fields:
+            - name: "c_first_name"
+              dataType:
+                type: "String"
+            - name: "c_middle_name"
+              dataType:
+                type: "String"
+            - name: "c_last_name"
+              dataType:
+                type: "String"
+            - name: "additional_name"
+              dataType:
+                type: "Boolean"
+            - name: "historical_names"
+              dataType:
+                type: "List"
+                dataType:
+                  type: "Struct"
+                  fields:
+                  - name: "previous_first_name"
+                    dataType:
+                      type: "String"
+                  - name: "previous_middle_name"
+                    dataType:
+                      type: "String"
+                  - name: "previous_last_name"
+                    dataType:
+                      type: "String"
+                  - name: "previous_age"
+                    dataType:
+                      type: "Number"
+                  - name: "is_still_active"
+                    dataType:
+                      type: "Boolean"
+                  - name: "all_previous_count"
+                    dataType:
+                      type: "List"
+                      dataType:
+                        type: "Number"
+        - name: "business"
+          dataType:
+            type: "List"
+            dataType:
+              type: "Struct"
+              fields:
+              - name: "address"
+                dataType:
+                  type: "List"
+                  dataType:
+                    type: "Struct"
+                    fields:
+                    - name: "name"
+                      dataType:
+                        type: "String"
+                    - name: "manager"
+                      dataType:
+                        type: "String"
+                    - name: "contact"
+                      dataType:
+                        type: "List"
+                        dataType:
+                          type: "Struct"
+                          fields:
+                          - name: "type"
+                            dataType:
+                              type: "String"
+                          - name: "content"
+                            dataType:
+                              type: "String"
+                    - name: "zip_code"
+                      dataType:
+                        type: "Number"
+                    - name: "is_still_active"
+                      dataType:
+                        type: "Boolean"
+              - name: "is_business_active"
+                dataType:
+                  type: "Boolean"
+              - name: "business_revenue"
+                dataType:
+                  type: "Number"
+              - name: "name"
+                dataType:
+                  type: "String"
+
+
 seeds:
   - name: raw_customers
     description: A mapping of two letter country codes to country names
@@ -10,7 +118,7 @@ seeds:
 
 sources:
   - name: myAliasedTest
-    database: jaffle_shop
+    database: "{{var('my_db_test')}}"
     schema: dbt_alice
     tables:
       - name: testless
@@ -26,3 +134,107 @@ sources:
           warn_after: {count: 12, period: hour}
           #error_after: {count: 24, period: hour}
       - name: testlessmore
+  - name: "KISHORE.TEST"
+    database: "KISHORE"
+    schema: "TEST"
+    config:
+      enabled: true
+    tables:
+    - name: "PERSONS"
+      columns:
+      - name: "ID"
+        dataType:
+          type: "Number"
+      - name: "C"
+        dataType:
+          type: "Variant"
+          inferredType:
+            type: "Struct"
+            fields:
+            - name: "complex_name"
+              dataType:
+                type: "Struct"
+                fields:
+                - name: "c_first_name"
+                  dataType:
+                    type: "String"
+                - name: "c_middle_name"
+                  dataType:
+                    type: "String"
+                - name: "c_last_name"
+                  dataType:
+                    type: "String"
+                - name: "additional_name"
+                  dataType:
+                    type: "Boolean"
+                - name: "historical_names"
+                  dataType:
+                    type: "List"
+                    dataType:
+                      type: "Struct"
+                      fields:
+                      - name: "previous_first_name"
+                        dataType:
+                          type: "String"
+                      - name: "previous_middle_name"
+                        dataType:
+                          type: "String"
+                      - name: "previous_last_name"
+                        dataType:
+                          type: "String"
+                      - name: "previous_age"
+                        dataType:
+                          type: "Number"
+                      - name: "is_still_active"
+                        dataType:
+                          type: "Boolean"
+                      - name: "all_previous_count"
+                        dataType:
+                          type: "List"
+                          dataType:
+                            type: "Number"
+            - name: "business"
+              dataType:
+                type: "List"
+                dataType:
+                  type: "Struct"
+                  fields:
+                  - name: "address"
+                    dataType:
+                      type: "List"
+                      dataType:
+                        type: "Struct"
+                        fields:
+                        - name: "name"
+                          dataType:
+                            type: "String"
+                        - name: "manager"
+                          dataType:
+                            type: "String"
+                        - name: "contact"
+                          dataType:
+                            type: "List"
+                            dataType:
+                              type: "Struct"
+                              fields:
+                              - name: "type"
+                                dataType:
+                                  type: "String"
+                              - name: "content"
+                                dataType:
+                                  type: "String"
+                        - name: "zip_code"
+                          dataType:
+                            type: "Number"
+                        - name: "is_still_active"
+                          dataType:
+                            type: "Boolean"
+                  - name: "is_business_active"
+                    dataType:
+                      type: "Boolean"
+                  - name: "business_revenue"
+                    dataType:
+                      type: "Number"
+                  - name: "name"
+                    dataType:
+                      type: "String"

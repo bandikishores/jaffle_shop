@@ -5,3 +5,8 @@ dbt_modules/
 logs/
 **/.DS_Store
 dbt_packages/
+metastore_db/
+postgres-data
+derby.log
+logfile
+flow_based_logs/

@@ -1,0 +1,109 @@
+
+{{ config({
+        "materialized": "incremental",
+        "tags": ["orders_snapshots"],
+        "alias": "orders",
+        "schema": "my_copy",
+        "enabled": true,
+        "persist_docs": {"relation": true, "columns": true},
+        "docs": {"default" : {"show" : true}}
+    })
+}}
+
+{% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
+
+{% set payments_dict = {
+    'credit':'card10',
+    'bank':'transfer11'
+} %}
+
+
+with orders as (
+
+    select * from {{ ref('stg_orders') }}
+
+),
+{{ dbt_utils.generate_surrogate_key(['ipc.I_PRODUCT_NAME', 'ipc.I_ITEM_ID']) }} as su_key,
+{#
+ my_orders as (
+
+    select 
+        * 
+    from {{ source('myAliasedTest','testless') }} 
+
+    {% if target.name == 'dev' %}
+        limit 10
+    {% else %}
+        limit 100
+    {% endif %}
+
+),
+#}
+
+payments as (
+
+    select *,
+    
+
+        {% for payment_method in payments_dict -%}
+            case when payment_method = '{{ payment_method }}' then amount else 0 end as {{ payments_dict[payment_method] }}_amount,
+        {% endfor %}
+
+        {{ cents_to_dollars('amount') }} as macro_amount
+
+    from {{ ref('stg_payments') }}
+
+),
+
+{% set my_abc = 'abc' %}
+
+order_payments as (
+
+    select
+        order_id,
+        -- {{my_abc}},
+        -- {{payment_methods}},
+        -- {{ var('my_payment_methods') }},
+        {% for payment_method in payment_methods -%}
+        sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}_amount,
+        {% endfor -%}
+
+        sum(amount) as total_amount
+
+    from payments
+
+    group by order_id
+
+),
+
+final as (
+
+    select
+        orders.order_id,
+        orders.customer_id,
+        orders.order_date,
+        orders.status,
+
+        {% for payment_method in payment_methods -%}
+
+        order_payments.{{ payment_method }}_amount,
+
+        {% endfor -%}
+
+        order_payments.total_amount as amount
+
+    from orders
+
+
+    left join order_payments
+        on orders.order_id = order_payments.order_id
+
+)
+
+select * from final
+{% if is_incremental() %}
+
+  -- this filter will only be applied on an incremental run
+  where order_date > (select max(order_date) from {{ this }})
+
+{% endif %}

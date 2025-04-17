@@ -7,4 +7,6 @@
 --   INSERT INTO dbt_alice.udf_support VALUES (b);
 -- END;
 
+select 1
+
 {% endmacro %}

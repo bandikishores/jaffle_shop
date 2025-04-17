@@ -9,4 +9,4 @@ select
     sum(amount) as total_amount
 from {{ ref('stg_payments') }}
 group by 1
-having not(sum(amount) >= 0)
+having not(coalesce(sum(amount), 100) < 0)

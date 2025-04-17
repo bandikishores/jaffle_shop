@@ -1,6 +1,12 @@
 version: 2
 
 models:
+  - name: test_snowflake_python_model
+    config:
+      materialized: table
+      email: "{{ var('email') }}"
+      email_env_var: "{{ env_var('email_env', 'default_not_passed_env') }}"
+      email_password: "{{ var('email_password_var') }}"
   - name: customers
     description: This table has basic information about a customer, as well as some derived facts based on a customer's orders
 
@@ -38,7 +44,9 @@ models:
           - unique
           - not_null
           - my_not_null
-          - custom_singular_test
+          - custom_singular_test:
+              config:
+                limit: 2
         description: This is a unique identifier for an order
 
       - name: customer_id

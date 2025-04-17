@@ -1,0 +1,23 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple
+    level: DEBUG  # Set to DEBUG to capture all logs
+
+loggers:
+  dbt:
+    level: DEBUG
+    handlers: [console]
+    propagate: false
+
+  snowflake.connector:  # Add this to capture logs from the library
+    level: DEBUG
+    handlers: [console]
+    propagate: false
